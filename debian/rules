@@ -1,11 +1,16 @@
 #!/usr/bin/make -f
 
 %:
-	dh $@
+	dh $@ --buildsystem=install
 
+override_dh_auto_clean:
+override_dh_auto_build:
+override_dh_auto_test:
 override_dh_auto_install:
+
+override_dh_install:
 	mkdir -p debian/osripper/usr/bin
 	mkdir -p debian/osripper/usr/share/osripper
 	cp -r * debian/osripper/usr/share/osripper/
-	ln -s /usr/share/osripper/OSRipper.py debian/osripper/usr/bin/osripper
+	ln -sf /usr/share/osripper/OSRipper.py debian/osripper/usr/bin/osripper
 	chmod +x debian/osripper/usr/share/osripper/OSRipper.py
