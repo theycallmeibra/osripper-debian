@@ -9,6 +9,20 @@ Vcs-Browser: https://github.com/theycallmeibra/osripper-debian
 
 Package: osripper
 Architecture: all
-Depends: ${python3:Depends}, ${misc:Depends}, python3, python3-requests, python3-colorama
+Depends: ${python3:Depends}, ${misc:Depends}, 
+ python3,
+ python3-requests,
+ python3-psutil,
+ python3-colorama,
+ python3-rich,
+ python3-click,
+ python3-yaml,
+ python3-flask,
+ python3-dnspython,
+ python3-cryptography,
+ python3-zstandard,
+ python3-pyngrok,
+ python3-ordered-set,
+ nutka
 Description: OSINT tool for scraping information
  OSRipper is a powerful lead generation and OSINT tool.
