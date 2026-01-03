@@ -13,10 +13,12 @@ override_dh_install:
 	mkdir -p debian/osripper/usr/share/osripper
 	mkdir -p debian/osripper/usr/bin
 	
-	# Копируем файлы, исключая debian
+	# Копируем все исходники
 	rsync -av . debian/osripper/usr/share/osripper/ --exclude debian
 	
-	# Устанавливаем права и создаем симлинк напрямую
-	# Мы знаем, что файл называется OSRipper.py
-	chmod +x debian/osripper/usr/share/osripper/OSRipper.py
-	ln -sf /usr/share/osripper/OSRipper.py debian/osripper/usr/bin/osripper
+	# Создаем скрипт-обертку для запуска в /usr/bin/osripper
+	echo '#!/bin/bash' > debian/osripper/usr/bin/osripper
+	echo 'export PYTHONPATH=/usr/share/osripper/src' >> debian/osripper/usr/bin/osripper
+	echo 'python3 -m osripper.main "$@"' >> debian/osripper/usr/bin/osripper
+	
+	chmod +x debian/osripper/usr/bin/osripper
