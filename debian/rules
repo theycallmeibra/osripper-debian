@@ -1,16 +1,23 @@
 #!/usr/bin/make -f
 
+# Используем пустую систему сборки
 %:
-	dh $@ --buildsystem=install
+	dh $@
 
+# Отключаем автоматику полностью
 override_dh_auto_clean:
+override_dh_auto_configure:
 override_dh_auto_build:
 override_dh_auto_test:
 override_dh_auto_install:
 
+# Всё делаем вручную на этапе установки в пакет
 override_dh_install:
 	mkdir -p debian/osripper/usr/bin
 	mkdir -p debian/osripper/usr/share/osripper
 	cp -r * debian/osripper/usr/share/osripper/
+	# Удаляем саму папку debian из копируемых файлов внутри пакета
+	rm -rf debian/osripper/usr/share/osripper/debian
+	# Создаем ссылку для запуска
 	ln -sf /usr/share/osripper/OSRipper.py debian/osripper/usr/bin/osripper
 	chmod +x debian/osripper/usr/share/osripper/OSRipper.py
