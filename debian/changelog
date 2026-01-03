@@ -1,3 +1,9 @@
+osripper (20260103-1) unstable; urgency=medium
+
+  * Automated update to 20260103
+
+ -- theycallmeibra <ibrahimmammedov7@gmail.com>  Sat, 03 Jan 2026 18:59:55 +0400
+
 osripper (1.0-1) unstable; urgency=low
 
   * Initial release for ParrotOS.
