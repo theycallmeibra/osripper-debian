@@ -10,10 +10,16 @@ override_dh_auto_test:
 override_dh_auto_install:
 
 override_dh_install:
-	mkdir -p debian/osripper/usr/bin
+	# Создаем структуру директорий в папке пакета
 	mkdir -p debian/osripper/usr/share/osripper
-	# Копируем всё, КРОМЕ папки debian, чтобы избежать рекурсии
-	find . -maxdepth 1 ! -name 'debian' ! -name '.' -exec cp -r {} debian/osripper/usr/share/osripper/ \;
-	# Создаем ссылку и права
-	ln -sf /usr/share/osripper/OSRipper.py debian/osripper/usr/bin/osripper
-	chmod +x debian/osripper/usr/share/osripper/OSRipper.py
+	mkdir -p debian/osripper/usr/bin
+	
+	# Копируем всё содержимое текущей папки в share, исключая папку debian
+	rsync -a . debian/osripper/usr/share/osripper/ --exclude debian
+	
+	# Ищем файл OSRipper.py (он может быть в корне или в подпапке)
+	# и создаем на него симлинк в /usr/bin/osripper
+	TARGET_PY=$(find debian/osripper/usr/share/osripper -name "OSRipper.py" | head -n 1) && \
+	chmod +x "$$TARGET_PY" && \
+	ln -sf "$${TARGET_PY#debian/osripper}" debian/osripper/usr/bin/osripper
+
